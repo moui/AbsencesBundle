@@ -1,0 +1,71 @@
+{% extends 'page_setup.html.twig' %}
+
+{% block main %}
+    {% if people|length == 0 %}
+        {% from '@theme/components/alert.html.twig' import alert %}
+        {{ alert({type: 'warning', important: true, description: 'absences.team.no_teams'|trans}) }}
+    {% else %}
+        {# Month overview #}
+        <div class="card mb-3">
+            <div class="card-header">
+                <h3 class="card-title">{{ month_date|month_name(true)|capitalize }}</h3>
+                <div class="card-actions btn-list">
+                    <a class="btn btn-sm" href="{{ path('absences_team', {month: prev_month, user: target ? target.id : null, year: year}) }}">&larr;</a>
+                    <a class="btn btn-sm" href="{{ path('absences_team', {month: next_month, user: target ? target.id : null, year: year}) }}">&rarr;</a>
+                </div>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-sm table-bordered card-table text-center mb-0" style="font-size: .75rem">
+                    <thead>
+                        <tr>
+                            <th class="text-start">{{ 'absences.person'|trans }}</th>
+                            {% for day in grid.days %}
+                                <th class="px-0 {{ day.holiday ? 'bg-public-holiday' : (day.weekend ? 'bg-weekend' : '') }}" style="min-width: 1.6rem">
+                                    {{ day.number }}<div class="text-secondary fw-normal">{{ day.date|day_name(true)|slice(0, 2)|capitalize }}</div>
+                                </th>
+                            {% endfor %}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for row in grid.rows %}
+                            <tr>
+                                <td class="text-start text-nowrap">
+                                    <a href="{{ path('absences_team', {user: row.person.id, month: month, year: year}) }}">{{ row.person.displayName }}</a>
+                                </td>
+                                {% for cell in row.cells %}
+                                    <td class="px-0 {{ cell.class }}" {% if cell.title %}title="{{ cell.title }}"{% endif %}>{{ cell.text }}</td>
+                                {% endfor %}
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="card-footer small">
+                <span class="badge bg-green-lt">{{ 'absences.type.vacation.initial'|trans }}</span> {{ 'absences.type.vacation'|trans }}
+                <span class="badge bg-yellow-lt ms-2">{{ 'absences.type.sickness.initial'|trans }}</span> {{ 'absences.type.sickness'|trans }}
+                <span class="badge bg-blue-lt ms-2">{{ 'absences.type.study.initial'|trans }}</span> {{ 'absences.type.study'|trans }}
+                <span class="badge bg-purple-lt ms-2">{{ 'absences.type.other.initial'|trans }}</span> {{ 'absences.type.other'|trans }}
+                <span class="badge bg-lime-lt ms-2">&nbsp;</span> {{ 'absences.holiday'|trans }}
+                <span class="text-secondary ms-2">{{ 'absences.team.grid_help'|trans }}</span>
+            </div>
+        </div>
+
+        <form method="get" action="{{ path('absences_team') }}" class="row g-2 align-items-end mb-3">
+            <input type="hidden" name="month" value="{{ month }}">
+            <input type="hidden" name="year" value="{{ year }}">
+            <div class="col-md-6">
+                <label class="form-label" for="abs_person">{{ 'absences.person'|trans }}</label>
+                <select class="form-select" id="abs_person" name="user" onchange="this.form.submit()">
+                    {% for id, person in people %}
+                        <option value="{{ id }}" {{ target and target.id == id ? 'selected' : '' }}>{{ person.displayName }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-auto"><noscript><button type="submit" class="btn">{{ 'absences.report.show'|trans }}</button></noscript></div>
+        </form>
+
+        {% if target %}
+            {% include '@Absences/_person.html.twig' %}
+        {% endif %}
+    {% endif %}
+{% endblock %}

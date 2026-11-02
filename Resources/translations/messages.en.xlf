@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="en" datatype="plaintext" original="messages.en.xlf">
+    <body>
+      <trans-unit id="absences.menu" resname="absences.menu">
+        <source>absences.menu</source>
+        <target>Absences</target>
+      </trans-unit>
+      <trans-unit id="absences.mine.title" resname="absences.mine.title">
+        <source>absences.mine.title</source>
+        <target>My absences</target>
+      </trans-unit>
+      <trans-unit id="absences.mine.intro" resname="absences.mine.intro">
+        <source>absences.mine.intro</source>
+        <target>Record your absences here; no approval is needed. An absence covers that day's expected hours (the whole day or the hours you enter), so do not log hours for it on a project.</target>
+      </trans-unit>
+      <trans-unit id="absences.team.title" resname="absences.team.title">
+        <source>absences.team.title</source>
+        <target>Team absences</target>
+      </trans-unit>
+      <trans-unit id="absences.team.no_teams" resname="absences.team.no_teams">
+        <source>absences.team.no_teams</source>
+        <target>You do not lead any team in Kimai, so there is nobody to manage.</target>
+      </trans-unit>
+      <trans-unit id="absences.team.grid_help" resname="absences.team.grid_help">
+        <source>absences.team.grid_help</source>
+        <target>"2h" = partial absence. Hover over a cell to see the details.</target>
+      </trans-unit>
+      <trans-unit id="absences.holidays.title" resname="absences.holidays.title">
+        <source>absences.holidays.title</source>
+        <target>Holidays</target>
+      </trans-unit>
+      <trans-unit id="absences.entitlements.title" resname="absences.entitlements.title">
+        <source>absences.entitlements.title</source>
+        <target>Annual vacation days</target>
+      </trans-unit>
+      <trans-unit id="absences.entitlements.intro" resname="absences.entitlements.intro">
+        <source>absences.entitlements.intro</source>
+        <target>Vacation days per year for each person. This is the same value as the vacation days field of the Kimai user profile. Empty = not set. Half days are allowed (for example 20.5).</target>
+      </trans-unit>
+      <trans-unit id="absences.entitlements.days_per_year" resname="absences.entitlements.days_per_year">
+        <source>absences.entitlements.days_per_year</source>
+        <target>Days per year</target>
+      </trans-unit>
+      <trans-unit id="absences.entitlements.used_in" resname="absences.entitlements.used_in">
+        <source>absences.entitlements.used_in</source>
+        <target>Used in %year%</target>
+      </trans-unit>
+      <trans-unit id="absences.person" resname="absences.person">
+        <source>absences.person</source>
+        <target>Person</target>
+      </trans-unit>
+      <trans-unit id="absences.people" resname="absences.people">
+        <source>absences.people</source>
+        <target>People</target>
+      </trans-unit>
+      <trans-unit id="absences.types" resname="absences.types">
+        <source>absences.types</source>
+        <target>Types</target>
+      </trans-unit>
+      <trans-unit id="absences.amount" resname="absences.amount">
+        <source>absences.amount</source>
+        <target>Amount</target>
+      </trans-unit>
+      <trans-unit id="absences.days" resname="absences.days">
+        <source>absences.days</source>
+        <target>Days</target>
+      </trans-unit>
+      <trans-unit id="absences.weekday" resname="absences.weekday">
+        <source>absences.weekday</source>
+        <target>Day</target>
+      </trans-unit>
+      <trans-unit id="absences.full_day" resname="absences.full_day">
+        <source>absences.full_day</source>
+        <target>Full day</target>
+      </trans-unit>
+      <trans-unit id="absences.half_day" resname="absences.half_day">
+        <source>absences.half_day</source>
+        <target>Half day</target>
+      </trans-unit>
+      <trans-unit id="absences.holiday" resname="absences.holiday">
+        <source>absences.holiday</source>
+        <target>Holiday</target>
+      </trans-unit>
+      <trans-unit id="absences.holiday.addon" resname="absences.holiday.addon">
+        <source>absences.holiday.addon</source>
+        <target>Holiday: %name%</target>
+      </trans-unit>
+      <trans-unit id="absences.holiday.addon_half_day" resname="absences.holiday.addon_half_day">
+        <source>absences.holiday.addon_half_day</source>
+        <target>Holiday: %name% (half day)</target>
+      </trans-unit>
+      <trans-unit id="absences.balance.entitled" resname="absences.balance.entitled">
+        <source>absences.balance.entitled</source>
+        <target>Annual vacation %year%</target>
+      </trans-unit>
+      <trans-unit id="absences.balance.used_in" resname="absences.balance.used_in">
+        <source>absences.balance.used_in</source>
+        <target>Used in %year%</target>
+      </trans-unit>
+      <trans-unit id="absences.balance.remaining" resname="absences.balance.remaining">
+        <source>absences.balance.remaining</source>
+        <target>Remaining</target>
+      </trans-unit>
+      <trans-unit id="absences.balance.not_set" resname="absences.balance.not_set">
+        <source>absences.balance.not_set</source>
+        <target>not set</target>
+      </trans-unit>
+      <trans-unit id="absences.by_type_in" resname="absences.by_type_in">
+        <source>absences.by_type_in</source>
+        <target>By type in %year%</target>
+      </trans-unit>
+      <trans-unit id="absences.form.title" resname="absences.form.title">
+        <source>absences.form.title</source>
+        <target>Record an absence</target>
+      </trans-unit>
+      <trans-unit id="absences.form.title_for" resname="absences.form.title_for">
+        <source>absences.form.title_for</source>
+        <target>Record an absence for %name%</target>
+      </trans-unit>
+      <trans-unit id="absences.form.from" resname="absences.form.from">
+        <source>absences.form.from</source>
+        <target>From</target>
+      </trans-unit>
+      <trans-unit id="absences.form.to" resname="absences.form.to">
+        <source>absences.form.to</source>
+        <target>To</target>
+      </trans-unit>
+      <trans-unit id="absences.form.by_hours" resname="absences.form.by_hours">
+        <source>absences.form.by_hours</source>
+        <target>By hours</target>
+      </trans-unit>
+      <trans-unit id="absences.form.hours_placeholder" resname="absences.form.hours_placeholder">
+        <source>absences.form.hours_placeholder</source>
+        <target>e.g. 2</target>
+      </trans-unit>
+      <trans-unit id="absences.form.hours_help" resname="absences.form.hours_help">
+        <source>absences.form.hours_help</source>
+        <target>An absence by hours covers a single day (for example, a doctor's appointment).</target>
+      </trans-unit>
+      <trans-unit id="absences.form.help" resname="absences.form.help">
+        <source>absences.form.help</source>
+        <target>One entry is recorded for each working day in the range; weekends, days the person does not work and holidays are skipped. Recording the same day and type again replaces it.</target>
+      </trans-unit>
+      <trans-unit id="absences.holidays.of_year" resname="absences.holidays.of_year">
+        <source>absences.holidays.of_year</source>
+        <target>Holidays %year%</target>
+      </trans-unit>
+      <trans-unit id="absences.holidays.none_in" resname="absences.holidays.none_in">
+        <source>absences.holidays.none_in</source>
+        <target>No holidays recorded for %year%.</target>
+      </trans-unit>
+      <trans-unit id="absences.list.title" resname="absences.list.title">
+        <source>absences.list.title</source>
+        <target>Absences %year%</target>
+      </trans-unit>
+      <trans-unit id="absences.list.empty" resname="absences.list.empty">
+        <source>absences.list.empty</source>
+        <target>No absences recorded in %year%.</target>
+      </trans-unit>
+      <trans-unit id="absences.list.confirm_delete" resname="absences.list.confirm_delete">
+        <source>absences.list.confirm_delete</source>
+        <target>Delete the absence on %date%?</target>
+      </trans-unit>
+      <trans-unit id="absences.holidays.intro" resname="absences.holidays.intro">
+        <source>absences.holidays.intro</source>
+        <target>A holiday sets the expected hours of &lt;strong&gt;everyone&lt;/strong&gt; to zero on that day (a half-day holiday halves them), so nobody has to log hours to make up for it. Months already locked in &lt;em&gt;Working times&lt;/em&gt; do not change.</target>
+      </trans-unit>
+      <trans-unit id="absences.holidays.intro_team" resname="absences.holidays.intro_team">
+        <source>absences.holidays.intro_team</source>
+        <target>Each person's absences are recorded in %link%.</target>
+      </trans-unit>
+      <trans-unit id="absences.holidays.add_or_change" resname="absences.holidays.add_or_change">
+        <source>absences.holidays.add_or_change</source>
+        <target>Add or change</target>
+      </trans-unit>
+      <trans-unit id="absences.holidays.name_placeholder" resname="absences.holidays.name_placeholder">
+        <source>absences.holidays.name_placeholder</source>
+        <target>e.g. New Year's Day</target>
+      </trans-unit>
+      <trans-unit id="absences.holidays.replace_help" resname="absences.holidays.replace_help">
+        <source>absences.holidays.replace_help</source>
+        <target>If there is already a holiday on that date, its name and type are replaced.</target>
+      </trans-unit>
+      <trans-unit id="absences.holidays.copy" resname="absences.holidays.copy">
+        <source>absences.holidays.copy</source>
+        <target>Copy holidays from %year%…</target>
+      </trans-unit>
+      <trans-unit id="absences.holidays.proposal_title" resname="absences.holidays.proposal_title">
+        <source>absences.holidays.proposal_title</source>
+        <target>Proposal: %from% holidays in %to%</target>
+      </trans-unit>
+      <trans-unit id="absences.holidays.exists" resname="absences.holidays.exists">
+        <source>absences.holidays.exists</source>
+        <target>already recorded</target>
+      </trans-unit>
+      <trans-unit id="absences.holidays.weekend" resname="absences.holidays.weekend">
+        <source>absences.holidays.weekend</source>
+        <target>weekend</target>
+      </trans-unit>
+      <trans-unit id="absences.holidays.movable_help" resname="absences.holidays.movable_help">
+        <source>absences.holidays.movable_help</source>
+        <target>Check movable holidays and moved dates before saving.</target>
+      </trans-unit>
+      <trans-unit id="absences.holidays.save_selected" resname="absences.holidays.save_selected">
+        <source>absences.holidays.save_selected</source>
+        <target>Save selected</target>
+      </trans-unit>
+      <trans-unit id="absences.holidays.confirm_delete" resname="absences.holidays.confirm_delete">
+        <source>absences.holidays.confirm_delete</source>
+        <target>Delete the holiday on %date%?</target>
+      </trans-unit>
+      <trans-unit id="absences.report.year" resname="absences.report.year">
+        <source>absences.report.year</source>
+        <target>Year</target>
+      </trans-unit>
+      <trans-unit id="absences.report.or_from" resname="absences.report.or_from">
+        <source>absences.report.or_from</source>
+        <target>or from</target>
+      </trans-unit>
+      <trans-unit id="absences.report.to" resname="absences.report.to">
+        <source>absences.report.to</source>
+        <target>to</target>
+      </trans-unit>
+      <trans-unit id="absences.report.show" resname="absences.report.show">
+        <source>absences.report.show</source>
+        <target>Show</target>
+      </trans-unit>
+      <trans-unit id="absences.report.filter_help" resname="absences.report.filter_help">
+        <source>absences.report.filter_help</source>
+        <target>A date range takes precedence over the year. The vacation balance is only shown for a whole year.</target>
+      </trans-unit>
+      <trans-unit id="absences.report.holiday_count" resname="absences.report.holiday_count">
+        <source>absences.report.holiday_count</source>
+        <target>Holidays in the period: %count% (managed in %link%; they do not count as absences).</target>
+      </trans-unit>
+      <trans-unit id="absences.report.entries" resname="absences.report.entries">
+        <source>absences.report.entries</source>
+        <target>Entries: %count%</target>
+      </trans-unit>
+      <trans-unit id="absences.report.by_person" resname="absences.report.by_person">
+        <source>absences.report.by_person</source>
+        <target>By person — %from% to %to%</target>
+      </trans-unit>
+      <trans-unit id="absences.report.empty" resname="absences.report.empty">
+        <source>absences.report.empty</source>
+        <target>No absences in the selected period.</target>
+      </trans-unit>
+      <trans-unit id="absences.report.annual" resname="absences.report.annual">
+        <source>absences.report.annual</source>
+        <target>Annual</target>
+      </trans-unit>
+      <trans-unit id="absences.report.detail" resname="absences.report.detail">
+        <source>absences.report.detail</source>
+        <target>Detail (%count%)</target>
+      </trans-unit>
+      <trans-unit id="absences.csv.source" resname="absences.csv.source">
+        <source>absences.csv.source</source>
+        <target>Source</target>
+      </trans-unit>
+      <trans-unit id="absences.csv.yes" resname="absences.csv.yes">
+        <source>absences.csv.yes</source>
+        <target>Yes</target>
+      </trans-unit>
+      <trans-unit id="absences.csv.no" resname="absences.csv.no">
+        <source>absences.csv.no</source>
+        <target>No</target>
+      </trans-unit>
+      <trans-unit id="absences.source.manual" resname="absences.source.manual">
+        <source>absences.source.manual</source>
+        <target>Manual</target>
+      </trans-unit>
+      <trans-unit id="absences.source.import" resname="absences.source.import">
+        <source>absences.source.import</source>
+        <target>Imported</target>
+      </trans-unit>
+      <trans-unit id="absences.type.vacation" resname="absences.type.vacation">
+        <source>absences.type.vacation</source>
+        <target>Vacation</target>
+      </trans-unit>
+      <trans-unit id="absences.type.vacation.initial" resname="absences.type.vacation.initial">
+        <source>absences.type.vacation.initial</source>
+        <target>V</target>
+      </trans-unit>
+      <trans-unit id="absences.type.sickness" resname="absences.type.sickness">
+        <source>absences.type.sickness</source>
+        <target>Sick leave</target>
+      </trans-unit>
+      <trans-unit id="absences.type.sickness.initial" resname="absences.type.sickness.initial">
+        <source>absences.type.sickness.initial</source>
+        <target>S</target>
+      </trans-unit>
+      <trans-unit id="absences.type.study" resname="absences.type.study">
+        <source>absences.type.study</source>
+        <target>Study leave</target>
+      </trans-unit>
+      <trans-unit id="absences.type.study.initial" resname="absences.type.study.initial">
+        <source>absences.type.study.initial</source>
+        <target>St</target>
+      </trans-unit>
+      <trans-unit id="absences.type.other" resname="absences.type.other">
+        <source>absences.type.other</source>
+        <target>Other absence</target>
+      </trans-unit>
+      <trans-unit id="absences.type.other.initial" resname="absences.type.other.initial">
+        <source>absences.type.other.initial</source>
+        <target>O</target>
+      </trans-unit>
+      <trans-unit id="absences.widget.title" resname="absences.widget.title">
+        <source>absences.widget.title</source>
+        <target>My leave</target>
+      </trans-unit>
+      <trans-unit id="absences.widget.remaining" resname="absences.widget.remaining">
+        <source>absences.widget.remaining</source>
+        <target>Vacation left %year%</target>
+      </trans-unit>
+      <trans-unit id="absences.widget.of_used" resname="absences.widget.of_used">
+        <source>absences.widget.of_used</source>
+        <target>of %entitled% · used %used%</target>
+      </trans-unit>
+      <trans-unit id="absences.widget.used" resname="absences.widget.used">
+        <source>absences.widget.used</source>
+        <target>used %used%</target>
+      </trans-unit>
+      <trans-unit id="absences.widget.next_holiday" resname="absences.widget.next_holiday">
+        <source>absences.widget.next_holiday</source>
+        <target>Next holiday</target>
+      </trans-unit>
+      <trans-unit id="absences.widget.today" resname="absences.widget.today">
+        <source>absences.widget.today</source>
+        <target>Today</target>
+      </trans-unit>
+      <trans-unit id="absences.widget.no_holidays" resname="absences.widget.no_holidays">
+        <source>absences.widget.no_holidays</source>
+        <target>No holidays recorded.</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

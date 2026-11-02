@@ -1,0 +1,19 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    # The bundle class itself must stay registered: PluginManager discovers
+    # plugins through the PluginInterface tag on the *service*.
+    KimaiPlugin\AbsencesBundle\:
+        resource: '../../*'
+        exclude:
+            - '../../Resources/'
+            - '../../Migrations/'
+            - '../../Model/'
+            - '../../vendor/'
+
+    KimaiPlugin\AbsencesBundle\Controller\:
+        resource: '../../Controller/'
+        tags: ['controller.service_arguments']

@@ -1,0 +1,109 @@
+{% extends 'page_setup.html.twig' %}
+
+{% block main %}
+    <p class="text-secondary">
+        {{ 'absences.holidays.intro'|trans|raw }}
+        {{ 'absences.holidays.intro_team'|trans({'%link%': '<a href="' ~ path('absences_team') ~ '">' ~ ('absences.team.title'|trans|e) ~ '</a>'})|raw }}
+    </p>
+
+    <div class="row row-cards">
+        <div class="col-lg-4">
+            <div class="card mb-3">
+                <div class="card-header"><h3 class="card-title">{{ 'absences.holidays.add_or_change'|trans }}</h3></div>
+                <div class="card-body">
+                    <form method="post" action="{{ path('absences_holidays_save') }}">
+                        <input type="hidden" name="_token" value="{{ csrf_token('absences_holidays') }}">
+                        <input type="hidden" name="year" value="{{ year }}">
+                        <div class="mb-2">
+                            <label class="form-label" for="hol_date">{{ 'date'|trans }}</label>
+                            <input class="form-control" type="date" id="hol_date" name="date" required>
+                        </div>
+                        <div class="mb-2">
+                            <label class="form-label" for="hol_name">{{ 'name'|trans }}</label>
+                            <input class="form-control" type="text" id="hol_name" name="name" maxlength="150" required placeholder="{{ 'absences.holidays.name_placeholder'|trans }}">
+                        </div>
+                        <label class="form-check mb-3">
+                            <input class="form-check-input" type="checkbox" name="half_day" value="1">
+                            <span class="form-check-label">{{ 'absences.half_day'|trans }}</span>
+                        </label>
+                        <button type="submit" class="btn btn-primary w-100">{{ 'action.save'|trans }}</button>
+                        <div class="form-hint mt-2">{{ 'absences.holidays.replace_help'|trans }}</div>
+                    </form>
+                </div>
+            </div>
+            <a class="btn w-100" href="{{ path('absences_holidays', {year: year, copy: 1}) }}">{{ 'absences.holidays.copy'|trans({'%year%': year - 1}) }}</a>
+        </div>
+
+        <div class="col-lg-8">
+            {% if proposals is not null %}
+                <div class="card mb-3 border-azure">
+                    <div class="card-header"><h3 class="card-title">{{ 'absences.holidays.proposal_title'|trans({'%from%': year - 1, '%to%': year}) }}</h3></div>
+                    {% if proposals|length == 0 %}
+                        <div class="card-body text-secondary">{{ 'absences.holidays.none_in'|trans({'%year%': year - 1}) }}</div>
+                    {% else %}
+                        <form method="post" action="{{ path('absences_holidays_save') }}">
+                            <input type="hidden" name="_token" value="{{ csrf_token('absences_holidays') }}">
+                            <input type="hidden" name="year" value="{{ year }}">
+                            <table class="table table-vcenter card-table">
+                                <thead><tr><th class="w-1"></th><th>{{ 'date'|trans }}</th><th>{{ 'name'|trans }}</th><th>{{ 'absences.half_day'|trans }}</th><th></th></tr></thead>
+                                <tbody>
+                                    {% for p in proposals %}
+                                        <tr>
+                                            <td><input class="form-check-input" type="checkbox" name="holidays[{{ loop.index0 }}][selected]" value="1" {{ p.exists or p.weekend ? '' : 'checked' }}></td>
+                                            <td><input class="form-control form-control-sm" type="date" name="holidays[{{ loop.index0 }}][date]" value="{{ p.date }}"></td>
+                                            <td><input class="form-control form-control-sm" type="text" name="holidays[{{ loop.index0 }}][name]" value="{{ p.name }}" maxlength="150"></td>
+                                            <td><input class="form-check-input" type="checkbox" name="holidays[{{ loop.index0 }}][half_day]" value="1" {{ p.half_day ? 'checked' : '' }}></td>
+                                            <td class="small text-secondary">
+                                                {{ p.day|day_name }}
+                                                {% if p.exists %}<span class="badge bg-secondary-lt">{{ 'absences.holidays.exists'|trans }}</span>{% endif %}
+                                                {% if p.weekend %}<span class="badge bg-yellow-lt">{{ 'absences.holidays.weekend'|trans }}</span>{% endif %}
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                            <div class="card-footer d-flex justify-content-between align-items-center">
+                                <span class="small text-secondary">{{ 'absences.holidays.movable_help'|trans }}</span>
+                                <button type="submit" class="btn btn-primary">{{ 'absences.holidays.save_selected'|trans }}</button>
+                            </div>
+                        </form>
+                    {% endif %}
+                </div>
+            {% endif %}
+
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">{{ 'absences.holidays.of_year'|trans({'%year%': year}) }}</h3>
+                    <div class="card-actions btn-list">
+                        <a class="btn btn-sm" href="{{ path('absences_holidays', {year: year - 1}) }}">&larr; {{ year - 1 }}</a>
+                        <a class="btn btn-sm" href="{{ path('absences_holidays', {year: year + 1}) }}">{{ year + 1 }} &rarr;</a>
+                    </div>
+                </div>
+                {% if holidays|length == 0 %}
+                    <div class="card-body text-secondary">{{ 'absences.holidays.none_in'|trans({'%year%': year}) }}</div>
+                {% else %}
+                    <table class="table table-vcenter card-table">
+                        <thead><tr><th>{{ 'date'|trans }}</th><th>{{ 'absences.weekday'|trans }}</th><th>{{ 'name'|trans }}</th><th>{{ 'type'|trans }}</th><th class="w-1"></th></tr></thead>
+                        <tbody>
+                            {% for h in holidays %}
+                                <tr>
+                                    <td class="text-nowrap">{{ h.day|date_short }}</td>
+                                    <td>{{ h.day|day_name }}</td>
+                                    <td>{{ h.name }}</td>
+                                    <td><span class="badge bg-lime-lt">{{ (h.half_day ? 'absences.half_day' : 'absences.full_day')|trans }}</span></td>
+                                    <td>
+                                        <form method="post" action="{{ path('absences_holidays_delete', {id: h.id}) }}" data-confirm="{{ 'absences.holidays.confirm_delete'|trans({'%date%': h.day|date_short}) }}" onsubmit="return confirm(this.dataset.confirm);">
+                                            <input type="hidden" name="_token" value="{{ csrf_token('absences_holidays_delete') }}">
+                                            <input type="hidden" name="year" value="{{ year }}">
+                                            <button type="submit" class="btn btn-ghost-danger btn-sm" title="{{ 'action.delete'|trans }}">&times;</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

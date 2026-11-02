@@ -1,0 +1,161 @@
+{# One person's absences for a year: balance, form, list, holidays.
+   Expects: target, year, rows, by_type, balance, holidays, types, today, back, (month). #}
+{% set badge = {holiday: 'bg-green-lt', sickness: 'bg-yellow-lt', 'time-off': 'bg-blue-lt', other: 'bg-purple-lt'} %}
+
+<div class="row row-cards mb-3">
+    <div class="col-6 col-md-3"><div class="card card-sm"><div class="card-body">
+        <div class="text-secondary">{{ 'absences.balance.entitled'|trans({'%year%': year}) }}</div><div class="h2 m-0">{{ balance.has_entitlement ? balance.entitled : 'absences.balance.not_set'|trans }}</div>
+    </div></div></div>
+    <div class="col-6 col-md-3"><div class="card card-sm"><div class="card-body">
+        <div class="text-secondary">{{ 'absences.balance.used_in'|trans({'%year%': year}) }}</div><div class="h2 m-0">{{ balance.used }}</div>
+    </div></div></div>
+    <div class="col-6 col-md-3"><div class="card card-sm"><div class="card-body">
+        <div class="text-secondary">{{ 'absences.balance.remaining'|trans }}</div><div class="h2 m-0 {{ balance.over ? 'text-danger' : '' }}">{{ balance.remaining }}</div>
+    </div></div></div>
+    <div class="col-6 col-md-3"><div class="card card-sm"><div class="card-body">
+        <div class="text-secondary mb-1">{{ 'absences.by_type_in'|trans({'%year%': year}) }}</div>
+        {% for type, total in by_type %}
+            <div class="small d-flex justify-content-between">
+                <span><span class="badge {{ badge[total.style] }}">{{ total.label|trans }}</span></span>
+                <span>{{ total.days_formatted }} · {{ total.hours_formatted }}</span>
+            </div>
+        {% endfor %}
+    </div></div></div>
+</div>
+
+<div class="row row-cards">
+    <div class="col-lg-4">
+        <div class="card mb-3">
+            <div class="card-header"><h3 class="card-title">{% if back == 'team' %}{{ 'absences.form.title_for'|trans({'%name%': target.displayName}) }}{% else %}{{ 'absences.form.title'|trans }}{% endif %}</h3></div>
+            <div class="card-body">
+                <form method="post" action="{{ path('absences_save') }}" id="abs_form">
+                    <input type="hidden" name="_token" value="{{ csrf_token('absences_save') }}">
+                    <input type="hidden" name="user" value="{{ target.id }}">
+                    <input type="hidden" name="back" value="{{ back }}">
+                    <input type="hidden" name="year" value="{{ year }}">
+                    {% if month is defined %}<input type="hidden" name="month" value="{{ month }}">{% endif %}
+                    <div class="mb-2">
+                        <label class="form-label" for="abs_type">{{ 'type'|trans }}</label>
+                        <select class="form-select" id="abs_type" name="type" required>
+                            {% for value, label in types %}<option value="{{ value }}">{{ label|trans }}</option>{% endfor %}
+                        </select>
+                    </div>
+                    <div class="row g-2 mb-2">
+                        <div class="col-6">
+                            <label class="form-label" for="abs_from">{{ 'absences.form.from'|trans }}</label>
+                            <input class="form-control" type="date" id="abs_from" name="from" value="{{ today }}" required>
+                        </div>
+                        <div class="col-6">
+                            <label class="form-label" for="abs_to">{{ 'absences.form.to'|trans }}</label>
+                            <input class="form-control" type="date" id="abs_to" name="to" value="{{ today }}">
+                        </div>
+                    </div>
+                    <div class="mb-2">
+                        <label class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="mode" value="full" checked>
+                            <span class="form-check-label">{{ 'absences.full_day'|trans }}</span>
+                        </label>
+                        <label class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="mode" value="hours">
+                            <span class="form-check-label">{{ 'absences.form.by_hours'|trans }}</span>
+                        </label>
+                    </div>
+                    <div class="mb-2" id="abs_hours_row" style="display: none">
+                        <label class="form-label" for="abs_hours">{{ 'hours'|trans }}</label>
+                        <input class="form-control" type="number" id="abs_hours" name="hours" min="0.25" max="24" step="0.25" placeholder="{{ 'absences.form.hours_placeholder'|trans }}">
+                        <div class="form-hint">{{ 'absences.form.hours_help'|trans }}</div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="abs_comment">{{ 'comment'|trans }}</label>
+                        <input class="form-control" type="text" id="abs_comment" name="comment" maxlength="2000">
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">{{ 'action.save'|trans }}</button>
+                    <div class="form-hint mt-2">{{ 'absences.form.help'|trans }}</div>
+                </form>
+            </div>
+        </div>
+
+        <div class="card mb-3">
+            <div class="card-header"><h3 class="card-title">{{ 'absences.holidays.of_year'|trans({'%year%': year}) }}</h3></div>
+            {% if holidays|length == 0 %}
+                <div class="card-body text-secondary">{{ 'absences.holidays.none_in'|trans({'%year%': year}) }}</div>
+            {% else %}
+                <table class="table table-sm table-vcenter card-table">
+                    <tbody>
+                        {% for holiday in holidays %}
+                            <tr class="{{ holiday.past ? 'text-secondary' : '' }}">
+                                <td class="text-nowrap">{{ holiday.day|date_short }}</td>
+                                <td>{{ holiday.name }}{% if holiday.half_day %} <span class="badge bg-lime-lt">{{ 'absences.half_day'|trans }}</span>{% endif %}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="col-lg-8">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">{{ 'absences.list.title'|trans({'%year%': year}) }}{% if back == 'team' %} — {{ target.displayName }}{% endif %}</h3>
+                <div class="card-actions btn-list">
+                    {% set route = back == 'team' ? 'absences_team' : 'absences_mine' %}
+                    {% set keep = back == 'team' ? {user: target.id, month: month|default(null)} : {} %}
+                    <a class="btn btn-sm" href="{{ path(route, keep|merge({year: year - 1})) }}">&larr; {{ year - 1 }}</a>
+                    <a class="btn btn-sm" href="{{ path(route, keep|merge({year: year + 1})) }}">{{ year + 1 }} &rarr;</a>
+                </div>
+            </div>
+            {% if rows|length == 0 %}
+                <div class="card-body text-secondary">{{ 'absences.list.empty'|trans({'%year%': year}) }}</div>
+            {% else %}
+                <table class="table table-vcenter card-table">
+                    <thead><tr><th>{{ 'date'|trans }}</th><th>{{ 'type'|trans }}</th><th class="text-end">{{ 'absences.amount'|trans }}</th><th>{{ 'comment'|trans }}</th><th class="w-1"></th></tr></thead>
+                    <tbody>
+                        {% for row in rows %}
+                            <tr>
+                                <td class="text-nowrap">{{ row.day|date_short }}<div class="small text-secondary">{{ row.day|day_name }}</div></td>
+                                <td><span class="badge {{ badge[row.style] }}">{{ row.type_label|trans }}</span>
+                                    {% if row.source == 'import' %}<div class="small text-secondary">{{ row.source_label|trans }}</div>{% endif %}</td>
+                                <td class="text-end text-nowrap">{{ row.full_day ? 'absences.full_day'|trans : row.amount }}</td>
+                                <td class="small" style="overflow-wrap: anywhere">{{ row.comment }}</td>
+                                <td>
+                                    <form method="post" action="{{ path('absences_delete', {id: row.id}) }}"
+                                          data-confirm="{{ 'absences.list.confirm_delete'|trans({'%date%': row.day|date_short}) }}"
+                                          onsubmit="return confirm(this.dataset.confirm);">
+                                        <input type="hidden" name="_token" value="{{ csrf_token('absences_delete') }}">
+                                        <input type="hidden" name="back" value="{{ back }}">
+                                        <input type="hidden" name="year" value="{{ year }}">
+                                        <input type="hidden" name="user" value="{{ target.id }}">
+                                        {% if month is defined %}<input type="hidden" name="month" value="{{ month }}">{% endif %}
+                                        <button type="submit" class="btn btn-ghost-danger btn-sm" title="{{ 'action.delete'|trans }}">&times;</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<script>
+    (function () {
+        const form = document.getElementById('abs_form');
+        if (!form) { return; }
+        const from = document.getElementById('abs_from');
+        const to = document.getElementById('abs_to');
+        const row = document.getElementById('abs_hours_row');
+        const hours = document.getElementById('abs_hours');
+        function sync() {
+            const partial = form.querySelector('input[name="mode"]:checked').value === 'hours';
+            row.style.display = partial ? '' : 'none';
+            hours.required = partial;
+            to.disabled = partial;
+            if (partial) { to.value = from.value; }
+        }
+        form.addEventListener('change', sync);
+        from.addEventListener('change', function () { if (to.value < from.value || to.disabled) { to.value = from.value; } });
+        sync();
+    })();
+</script>

@@ -1,0 +1,76 @@
+{
+    "name": "moui/absences-bundle",
+    "description": "Company holiday calendar and per-person absences (full or partial days) for Kimai, fed into Kimai's working times, with a vacation balance, an absences report and a dashboard widget.",
+    "homepage": "https://github.com/moui/AbsencesBundle",
+    "type": "kimai-plugin",
+    "version": "0.2.0",
+    "keywords": [
+        "kimai",
+        "kimai-plugin",
+        "absences",
+        "holidays",
+        "vacation",
+        "leave",
+        "working-time"
+    ],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Mauricio Barrera",
+            "homepage": "https://github.com/moui"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/moui/AbsencesBundle/issues",
+        "source": "https://github.com/moui/AbsencesBundle"
+    },
+    "extra": {
+        "kimai": {
+            "require": 26600,
+            "name": "Absences and holidays"
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "KimaiPlugin\\AbsencesBundle\\": ""
+        }
+    },
+    "config": {
+        "allow-plugins": {
+            "symfony/flex": false,
+            "symfony/runtime": false
+        },
+        "platform": {
+            "php": "8.2"
+        },
+        "preferred-install": {
+            "*": "dist"
+        },
+        "sort-packages": true
+    },
+    "require": {
+        "php": ">=8.2"
+    },
+    "scripts": {
+        "codestyle": "vendor/bin/php-cs-fixer fix --dry-run --verbose --show-progress=none",
+        "codestyle-fix": "vendor/bin/php-cs-fixer fix",
+        "codestyle-check": "vendor/bin/php-cs-fixer fix --dry-run --verbose --using-cache=no --show-progress=none --format=checkstyle",
+        "phpstan": "vendor/bin/phpstan analyse . --configuration=phpstan.neon",
+        "linting": [
+            "composer validate --strict --no-check-version",
+            "@codestyle-check",
+            "@phpstan"
+        ]
+    },
+    "require-dev": {
+        "friendsofphp/php-cs-fixer": "^3.0",
+        "kimai/kimai": "dev-main",
+        "phpstan/phpstan": "^2.0",
+        "phpstan/phpstan-deprecation-rules": "^2.0",
+        "phpstan/phpstan-doctrine": "^2.0",
+        "phpstan/phpstan-strict-rules": "^2.0",
+        "phpstan/phpstan-symfony": "^2.0",
+        "symfony/console": "^6.0",
+        "symfony/event-dispatcher": "^6.0"
+    }
+}

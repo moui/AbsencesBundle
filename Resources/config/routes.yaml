@@ -1,0 +1,9 @@
+# The /{_locale} prefix is not cosmetic: security.yaml protects the app with
+# `{path: '^/{_locale}/', roles: ROLE_USER}`. A route registered without the
+# prefix would fall outside that rule and be reachable without logging in.
+absences:
+    resource: '../../Controller/'
+    type: attribute
+    prefix: /{_locale}
+    defaults:
+        _locale: '%locale%'

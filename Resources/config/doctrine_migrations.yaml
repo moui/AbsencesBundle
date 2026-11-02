@@ -1,0 +1,9 @@
+# Used only by `bin/console kimai:bundle:absences:install`, which runs
+# doctrine:migrations:migrate with this file. Paths are relative to the Kimai
+# root (the installer chdir()s there). The bundle keeps its own version table.
+migrations_paths:
+    KimaiPlugin\AbsencesBundle\Migrations: ./var/plugins/AbsencesBundle/Migrations
+table_storage:
+    table_name: bundle_migration_absences
+    version_column_length: 191
+transactional: false

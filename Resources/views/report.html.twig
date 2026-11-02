@@ -1,0 +1,125 @@
+{% extends 'reporting/layout.html.twig' %}
+
+{% block report %}
+    {% from '@theme/components/alert.html.twig' import alert %}
+    {% set badge = {holiday: 'bg-green-lt', sickness: 'bg-yellow-lt', 'time-off': 'bg-blue-lt', other: 'bg-purple-lt'} %}
+
+    {% if filter.error %}{{ alert({type: 'danger', important: true, description: filter.error|trans({}, 'flashmessages')}) }}{% endif %}
+
+    {% embed '@theme/embeds/card.html.twig' %}
+        {% block box_title %}{{ 'filter'|trans }}{% endblock %}
+        {% block box_body %}
+            <form method="get" action="{{ path('absences_report') }}" class="row g-3 align-items-end">
+                <div class="col-md-2">
+                    <label class="form-label" for="ar_year">{{ 'absences.report.year'|trans }}</label>
+                    <input class="form-control" type="number" id="ar_year" name="year" min="2000" max="2100" value="{{ filter.year }}">
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label" for="ar_from">{{ 'absences.report.or_from'|trans }}</label>
+                    <input class="form-control" type="date" id="ar_from" name="from" value="{{ filter.whole_year ? '' : filter.from|date('Y-m-d') }}">
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label" for="ar_to">{{ 'absences.report.to'|trans }}</label>
+                    <input class="form-control" type="date" id="ar_to" name="to" value="{{ filter.whole_year ? '' : filter.to|date('Y-m-d') }}">
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label" for="ar_users">{{ 'absences.people'|trans }}</label>
+                    <select class="form-select selectpicker" id="ar_users" name="users[]" multiple data-placeholder="{{ 'all'|trans }}">
+                        {% for id, person in people %}<option value="{{ id }}" {{ id in filter.users ? 'selected' : '' }}>{{ person.displayName }}</option>{% endfor %}
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label" for="ar_types">{{ 'absences.types'|trans }}</label>
+                    <select class="form-select selectpicker" id="ar_types" name="types[]" multiple data-placeholder="{{ 'all'|trans }}">
+                        {% for value, label in types %}<option value="{{ value }}" {{ value in filter.types ? 'selected' : '' }}>{{ label|trans }}</option>{% endfor %}
+                    </select>
+                </div>
+                <div class="col-12 btn-list justify-content-end">
+                    <button type="submit" class="btn btn-primary">{{ 'absences.report.show'|trans }}</button>
+                    <a class="btn" href="{{ path('absences_report_export', query) }}">{{ 'csv'|trans }}</a>
+                </div>
+            </form>
+            <div class="small text-secondary mt-2">
+                {{ 'absences.report.filter_help'|trans }}
+                {{ 'absences.report.holiday_count'|trans({'%count%': holiday_count, '%link%': '<a href="' ~ path('absences_holidays') ~ '">' ~ ('absences.holidays.title'|trans|e) ~ '</a>'})|raw }}
+            </div>
+        {% endblock %}
+    {% endembed %}
+
+    <div class="row row-cards mb-3">
+        {% for type, total in totals %}
+            <div class="col-6 col-md-3">
+                <div class="card card-sm"><div class="card-body">
+                    <div class="text-secondary"><span class="badge {{ badge[total.style] }}">{{ total.label|trans }}</span></div>
+                    <div class="h2 m-0">{{ total.days_formatted }}</div>
+                    <div class="small text-secondary">{{ total.hours_formatted }} · {{ 'absences.report.entries'|trans({'%count%': total.entries}) }}</div>
+                </div></div>
+            </div>
+        {% endfor %}
+    </div>
+
+    {% embed '@theme/embeds/card.html.twig' with {'fullsize': true} %}
+        {% block box_title %}{{ 'absences.report.by_person'|trans({'%from%': filter.from|date_short, '%to%': filter.to|date_short}) }}{% endblock %}
+        {% block box_body_class %}p-0{% endblock %}
+        {% block box_body %}
+            {% if summary|length == 0 %}
+                <div class="p-3 text-secondary">{{ 'absences.report.empty'|trans }}</div>
+            {% else %}
+                <div class="table-responsive">
+                <table class="table table-vcenter card-table">
+                    <thead>
+                        <tr>
+                            <th>{{ 'absences.person'|trans }}</th>
+                            {% for value, label in types %}<th class="text-end">{{ label|trans }}</th>{% endfor %}
+                            <th class="text-end">{{ 'sum.total'|trans }}</th>
+                            {% if filter.whole_year %}<th class="text-end">{{ 'absences.report.annual'|trans }}</th><th class="text-end">{{ 'absences.balance.remaining'|trans }}</th>{% endif %}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for row in summary %}
+                            <tr>
+                                <td>{{ row.person.displayName }}</td>
+                                {% for value, label in types %}
+                                    {% set t = row.by_type[value] %}
+                                    <td class="text-end text-nowrap">{% if t.entries > 0 %}{{ t.days_formatted }}<div class="small text-secondary">{{ t.hours_formatted }}</div>{% else %}<span class="text-secondary">—</span>{% endif %}</td>
+                                {% endfor %}
+                                <td class="text-end text-nowrap"><strong>{{ row.total_days }}</strong><div class="small text-secondary">{{ row.total_hours }}</div></td>
+                                {% if filter.whole_year %}
+                                    <td class="text-end">{{ row.balance.has_entitlement ? row.balance.entitled : 'absences.balance.not_set'|trans }}</td>
+                                    <td class="text-end {{ row.balance.over ? 'text-danger' : '' }}">{{ row.balance.remaining }}</td>
+                                {% endif %}
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                </div>
+            {% endif %}
+        {% endblock %}
+    {% endembed %}
+
+    {% if rows|length > 0 %}
+        {% embed '@theme/embeds/card.html.twig' with {'fullsize': true} %}
+            {% block box_title %}{{ 'absences.report.detail'|trans({'%count%': rows|length}) }}{% endblock %}
+            {% block box_body_class %}p-0{% endblock %}
+            {% block box_body %}
+                <div class="table-responsive" style="max-height: 32rem; overflow-y: auto;">
+                <table class="table table-sm table-vcenter card-table">
+                    <thead><tr><th>{{ 'absences.person'|trans }}</th><th>{{ 'date'|trans }}</th><th>{{ 'type'|trans }}</th><th class="text-end">{{ 'absences.amount'|trans }}</th><th class="text-end">{{ 'absences.days'|trans }}</th><th>{{ 'comment'|trans }}</th></tr></thead>
+                    <tbody>
+                        {% for row in rows %}
+                            <tr>
+                                <td>{{ row.person }}</td>
+                                <td class="text-nowrap">{{ row.day|date_short }} <span class="text-secondary small">{{ row.day|day_name }}</span></td>
+                                <td><span class="badge {{ badge[row.style] }}">{{ row.type_label|trans }}</span></td>
+                                <td class="text-end text-nowrap">{{ row.full_day ? 'absences.full_day'|trans : row.amount }}</td>
+                                <td class="text-end">{{ row.days_value|number_format(2, '.', '') }}</td>
+                                <td class="small" style="overflow-wrap: anywhere">{{ row.comment }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                </div>
+            {% endblock %}
+        {% endembed %}
+    {% endif %}
+{% endblock %}

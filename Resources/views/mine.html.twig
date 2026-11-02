@@ -1,0 +1,6 @@
+{% extends 'page_setup.html.twig' %}
+
+{% block main %}
+    <p class="text-secondary">{{ 'absences.mine.intro'|trans }}</p>
+    {% include '@Absences/_person.html.twig' %}
+{% endblock %}

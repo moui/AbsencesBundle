@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="en" datatype="plaintext" original="flashmessages.en.xlf">
+    <body>
+      <trans-unit id="absences.error.target_not_allowed" resname="absences.error.target_not_allowed">
+        <source>absences.error.target_not_allowed</source>
+        <target>You cannot record absences for that person.</target>
+      </trans-unit>
+      <trans-unit id="absences.error.invalid_dates" resname="absences.error.invalid_dates">
+        <source>absences.error.invalid_dates</source>
+        <target>Please use valid dates.</target>
+      </trans-unit>
+      <trans-unit id="absences.error.hours_single_day" resname="absences.error.hours_single_day">
+        <source>absences.error.hours_single_day</source>
+        <target>An absence by hours covers a single day: use the same "from" and "to" date.</target>
+      </trans-unit>
+      <trans-unit id="absences.error.delete_not_allowed" resname="absences.error.delete_not_allowed">
+        <source>absences.error.delete_not_allowed</source>
+        <target>You cannot delete that absence.</target>
+      </trans-unit>
+      <trans-unit id="absences.error.invalid_type" resname="absences.error.invalid_type">
+        <source>absences.error.invalid_type</source>
+        <target>Invalid absence type.</target>
+      </trans-unit>
+      <trans-unit id="absences.error.range_order" resname="absences.error.range_order">
+        <source>absences.error.range_order</source>
+        <target>The start date must be before the end date.</target>
+      </trans-unit>
+      <trans-unit id="absences.error.range_too_long" resname="absences.error.range_too_long">
+        <source>absences.error.range_too_long</source>
+        <target>The range cannot be longer than one year.</target>
+      </trans-unit>
+      <trans-unit id="absences.error.hours_range" resname="absences.error.hours_range">
+        <source>absences.error.hours_range</source>
+        <target>Hours must be greater than zero and at most 24.</target>
+      </trans-unit>
+      <trans-unit id="absences.error.holiday_invalid_date" resname="absences.error.holiday_invalid_date">
+        <source>absences.error.holiday_invalid_date</source>
+        <target>invalid date "%date%"</target>
+      </trans-unit>
+      <trans-unit id="absences.error.holiday_missing_name" resname="absences.error.holiday_missing_name">
+        <source>absences.error.holiday_missing_name</source>
+        <target>%date%: the name is missing</target>
+      </trans-unit>
+      <trans-unit id="absences.error.holidays_not_saved" resname="absences.error.holidays_not_saved">
+        <source>absences.error.holidays_not_saved</source>
+        <target>Not saved: %errors%.</target>
+      </trans-unit>
+      <trans-unit id="absences.error.entitlements_invalid" resname="absences.error.entitlements_invalid">
+        <source>absences.error.entitlements_invalid</source>
+        <target>Invalid values (more than 0 and up to 60, in days or half days; empty = not set): %values%. Nothing was saved.</target>
+      </trans-unit>
+      <trans-unit id="absences.flash.saved" resname="absences.flash.saved">
+        <source>absences.flash.saved</source>
+        <target>%type% recorded for %name%: %dates%.</target>
+      </trans-unit>
+      <trans-unit id="absences.flash.skipped" resname="absences.flash.skipped">
+        <source>absences.flash.skipped</source>
+        <target>Days not recorded: %days%.</target>
+      </trans-unit>
+      <trans-unit id="absences.flash.deleted" resname="absences.flash.deleted">
+        <source>absences.flash.deleted</source>
+        <target>Absence on %date% deleted.</target>
+      </trans-unit>
+      <trans-unit id="absences.flash.holidays_saved" resname="absences.flash.holidays_saved">
+        <source>absences.flash.holidays_saved</source>
+        <target>Holiday(s) saved: %dates%.</target>
+      </trans-unit>
+      <trans-unit id="absences.flash.holiday_deleted" resname="absences.flash.holiday_deleted">
+        <source>absences.flash.holiday_deleted</source>
+        <target>Holiday deleted.</target>
+      </trans-unit>
+      <trans-unit id="absences.flash.entitlements_unchanged" resname="absences.flash.entitlements_unchanged">
+        <source>absences.flash.entitlements_unchanged</source>
+        <target>No changes.</target>
+      </trans-unit>
+      <trans-unit id="absences.flash.entitlements_saved" resname="absences.flash.entitlements_saved">
+        <source>absences.flash.entitlements_saved</source>
+        <target>Vacation days updated for %count% person(s).</target>
+      </trans-unit>
+      <trans-unit id="absences.skipped.not_working" resname="absences.skipped.not_working">
+        <source>absences.skipped.not_working</source>
+        <target>not a working day for the person</target>
+      </trans-unit>
+      <trans-unit id="absences.skipped.holiday" resname="absences.skipped.holiday">
+        <source>absences.skipped.holiday</source>
+        <target>holiday: %name%</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

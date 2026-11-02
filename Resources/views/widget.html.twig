@@ -1,0 +1,29 @@
+{# Numbers are pre-formatted in PHP (AbsenceSummary / Fmt); dates use Kimai's locale filters. #}
+{% embed '@theme/embeds/card.html.twig' with {'margin_bottom': 0} %}
+    {% block box_title %}{{ title|trans }}{% endblock %}
+    {% block box_body %}
+        <div class="text-secondary small">{{ 'absences.widget.remaining'|trans({'%year%': data.year}) }}</div>
+        {% if data.balance.has_entitlement %}
+            <div class="h1 m-0 {{ data.balance.over ? 'text-danger' : '' }}">{{ data.balance.remaining }}</div>
+            <div class="small text-secondary">{{ 'absences.widget.of_used'|trans({'%entitled%': data.balance.entitled, '%used%': data.balance.used}) }}</div>
+        {% else %}
+            <div class="h3 m-0 text-secondary">{{ 'absences.balance.not_set'|trans }}</div>
+            <div class="small text-secondary">{{ 'absences.widget.used'|trans({'%used%': data.balance.used}) }}</div>
+        {% endif %}
+
+        <hr class="my-2">
+        <div class="text-secondary small">{{ 'absences.widget.next_holiday'|trans }}</div>
+        {% if data.next_holiday %}
+            <div class="fw-bold">{{ data.next_holiday.is_today ? 'absences.widget.today'|trans : data.next_holiday.day|day_name ~ ' ' ~ data.next_holiday.day|date_short }}</div>
+            <div class="small">
+                {{ data.next_holiday.name }}
+                {% if data.next_holiday.half_day %}<span class="badge bg-lime-lt">{{ 'absences.half_day'|trans }}</span>{% endif %}
+            </div>
+        {% else %}
+            <div class="small text-secondary">{{ 'absences.widget.no_holidays'|trans }}</div>
+        {% endif %}
+    {% endblock %}
+    {% block box_footer %}
+        <a href="{{ path('absences_mine') }}" class="small">{{ 'absences.mine.title'|trans }} &rarr;</a>
+    {% endblock %}
+{% endembed %}

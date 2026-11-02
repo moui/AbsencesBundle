@@ -1,0 +1,25 @@
+{% extends 'page_setup.html.twig' %}
+
+{% block main %}
+    <p class="text-secondary">{{ 'absences.entitlements.intro'|trans }}</p>
+    <form method="post" action="{{ path('absences_entitlements_save') }}">
+        <input type="hidden" name="_token" value="{{ csrf_token('absences_entitlements') }}">
+        <div class="card">
+            <table class="table table-vcenter card-table">
+                <thead><tr><th>{{ 'absences.person'|trans }}</th><th>{{ 'email'|trans }}</th><th style="width: 9rem">{{ 'absences.entitlements.days_per_year'|trans }}</th><th class="text-end">{{ 'absences.entitlements.used_in'|trans({'%year%': year}) }}</th><th class="text-end">{{ 'absences.balance.remaining'|trans }}</th></tr></thead>
+                <tbody>
+                    {% for row in rows %}
+                        <tr>
+                            <td>{{ row.person.displayName }}</td>
+                            <td class="text-secondary">{{ row.person.email }}</td>
+                            <td><input class="form-control form-control-sm text-end" type="number" min="0.5" max="60" step="0.5" name="days[{{ row.person.id }}]" value="{{ row.value }}"></td>
+                            <td class="text-end">{{ row.balance.used }}</td>
+                            <td class="text-end {{ row.balance.over ? 'text-danger' : '' }}">{{ row.balance.remaining }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <div class="card-footer text-end"><button type="submit" class="btn btn-primary">{{ 'action.save'|trans }}</button></div>
+        </div>
+    </form>
+{% endblock %}
